@@ -1,15 +1,47 @@
 ﻿import math
 
+
+#Kodutöö: Esimesed programmid. print(),input(), aritmeetilised operatsioonid
+
+#Ülesanne 8
+
+timeM = int(input("Перевод минут в часы. Введите время в минутах: "))
+
+hours = timeM // 60
+min = timeM % 60
+
+print(f"{timeM} минут это {hours} часов и {min} минут")
+
+#Ülesanne 7
+
+speedkm = 29.9
+
+time = float(input("Сколько минут на роликах будешь кататься? "))
+
+travel = (speedkm / 60) * time
+
+print(f"На роликах проедешь расстояние {travel:.2f} километра за {time} минут если твоя средняя скорость {speedkm} км в час")
+
+
+#Ülesanne 6
+
+fuel = float(input("Введите количество потребленного топлива в литрах: "))
+
+distance = float(input("Введите пройденное расстояние в километрах: "))
+
+fuel100 = (fuel / distance) * 100
+
+print(f"Средний расход топлива составляет {fuel100:.2f} литра на 100 километров.")
+
+
 #Ülesanne 5
 
 lenght = float(input("Введите длину прямоугольника: "))
 width = float(input("Введите ширину прямоугольника: "))
 
-# Arvutame ümbermõõdu ja pindala
 perim = 2 * (lenght + width)
 square = lenght * width
 
-# Väljastame tulemused
 print(f"Периметр прямоугольника: {perim}")
 print(f"Площадь прямоугольника: {square}")
 
@@ -99,5 +131,5 @@ print("С скобкой ответ 3 + 8 / (4 - 2) * 4:", resultWith)
 
 
 #Ülesanne 1
-name = input("Enter your name: ")
-print("Welcome, " + name + "!")
+name = input("Введи свое имя: ")
+print("Привет, " + name + "!")
