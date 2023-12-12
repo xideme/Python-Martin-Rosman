@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>79634a25-37b9-47ef-a2ae-336a369675f3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Kodutoo_print.input.py</StartupFile>
+    <StartupFile>Kodutoo_Kehaindeks1.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Kodutoo_Kehaindeks1.py" />
     <Compile Include="Kodutoo_print.input.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
