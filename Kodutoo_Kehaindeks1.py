@@ -5,18 +5,15 @@ try:
     print("Tere! Olen sinu uus sõber - Python!")
     
     nimi = input("Sisesta oma nimi: ")
-    
     print(nimi.capitalize() + ", oi kui ilus nimi!")
     
     vastus = int(input(nimi + "! Kas leian Sinu keha indeksi? 0-ei, 1-jah => "))
-    
     if vastus == 1:
         pikkus = int(input("Sisesta oma pikkus (cm): "))
         mass = float(input("Sisesta oma kaal (kg): "))
         
         #расчет индекса массы тела
         indeks = mass / (0.01 * pikkus) ** 2
-        
         print(nimi + "! Sinu keha indeks on: {:.1f}".format(indeks))
         
         #индекс массы тела
