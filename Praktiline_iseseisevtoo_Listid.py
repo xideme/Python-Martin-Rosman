@@ -4,7 +4,7 @@
 #7
 
 # Генерация списка из 10 случайных чисел в диапазоне от -10 до 10
-numbers = [randint(-10, 10) for _ in range(10)]
+numbers = [randint(-10, 10) for i in range(10)]
 
 print("Исходный список:", numbers)
 
