@@ -1,0 +1,5 @@
+﻿яблоко:apple
+груша:pear
+вишня:cherry
+апельсин:orange
+банан:banana

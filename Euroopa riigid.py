@@ -14,4 +14,10 @@ def failist_to_dict(f:str):
     return riik_pealinn, pealinn_riik, riigid
 
 riik_pealinn, pealinn_riik, riigid = failist_to_dict("RiigidPealinnad.txt")
-print(riik_pealinn)
+riigid=list(riik_pealinn.keys())
+print(riigid)
+
+while True:
+    riik=input("Riik: ")
+    print(riik_pealinn[riik])
+
