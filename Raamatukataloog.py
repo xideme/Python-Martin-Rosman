@@ -110,8 +110,6 @@ def kustuta_Zanri_raamatud():
 def kustuta_ja_taasta_tabel(selected_table):
     # Kustuta tabel
     c.execute(f'DROP TABLE IF EXISTS {selected_table}')
-    conn.commit()
-    conn.close()
     messagebox.showinfo("Success", f"Table {selected_table} has been deleted successfully")
 
 
@@ -160,13 +158,28 @@ def create_dialog():
     opt = tk.OptionMenu(root, var, *option_list)
     opt.pack()
 
-    def on_button():
+    def on_button_delete():
         table_name = var.get()
         if table_name != "Select a table":
             kustuta_ja_taasta_tabel(table_name)
 
-    button = tk.Button(root, text="DELETE", command=on_button)
-    button.pack()
+    def on_button_restore():
+        table_name = var.get()
+        if table_name == "Autorid":
+            c.execute('''
+            CREATE TABLE IF NOT EXISTS Autorid (
+            autor_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            autor_nimi TEXT NOT NULL,
+            sunnikuupaev DATE NOT NULL
+    )
+''')
+
+
+    button_delete = tk.Button(root, text="DELETE", command=on_button_delete)
+    button_delete.pack()
+
+    button_restore = tk.Button(root, text="RESTORE", command=on_button_restore)
+    button_restore.pack()
 
 
 
