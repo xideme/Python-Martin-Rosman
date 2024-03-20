@@ -134,9 +134,9 @@ def näita_raamatud():
     INNER JOIN Zanrid ON Raamatud.Zanr_id = Zanrid.Zanr_id
 ''')
     rows = c.fetchall()
-    text.insert(tk.END, 'ID | Pealkiri | Väljaandmise kuupäev | Autor | Zanr\n')  # Add column labels
+    text.insert(tk.END, 'ID|Pealkiri |\tKuupäev |\tAutor |\tZanr\n')  # Add column labels
     for row in rows:
-        text.insert(tk.END, '{} | {} | {} | {} | {}\n'.format(row[0], row[1], row[2], row[3], row[4]))  # Format each row as a tab-separated string
+        text.insert(tk.END, '{}|{}|\t{}|\t{}|\t{}\n'.format(row[0], row[1], row[2], row[3], row[4]))  # Format each row as a tab-separated string
         text.insert(tk.END, '-'*30 + '\n')  # Add a separator line
 
 def näita_autorid():

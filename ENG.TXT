@@ -1,7 +1,0 @@
-﻿apple:яблоко
-pear:груша
-cherry:вишня
-orange:апельсин
-banana:банан
-
-cat:кошка

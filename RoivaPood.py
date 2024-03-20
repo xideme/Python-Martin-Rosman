@@ -79,7 +79,7 @@ JOIN brands ON products.id_brands = brands.id_brands;
 """
 
 # Используем
-conn=create_connection("C:/Users/opilane/source/repos/xideme/Python-Martin-Rosman/AppData/roivapood.db")
+conn=create_connection("C:/Users/soopk/source/repos/xideme/Python-Martin-Rosman/AppDataroivapood.db")
 
 execute_query(conn, create_categories_table)
 execute_query(conn, create_brands_table)

@@ -1,74 +1,118 @@
 ﻿import random
 
-# Функция для чтения данных из файла
-def loe_failist(f):
-    with open(f,'r',encoding="utf-8") as fail:
-        mas = [rida.strip() for rida in fail]
-    return mas
+#открытие и чтение из файла
+def read_from_file(f):
+    file = open(f, 'r', encoding="utf-8")
+    array = [] 
+    for line in file:
+        array.append(line.strip()) #удаляем лишние пробелы
+    file.close()
+    return array
 
-# Функция для добавления слова в словарь
-def add_word(word, translation, lang):
-    with open(f"{lang}.txt", 'a', encoding="utf-8") as f:
-        f.write(f"\n{word}:{translation}")
+#сохранение в файл
+def save_to_file(f, array):
+    file = open(f, 'w', encoding="utf-8")
+    for element in array:
+        file.write(element + '\n')
+    file.close()
+    
+#указание файла словаря
+rusd:list = read_from_file("RUS.txt")
+estd:list = read_from_file("EST.txt")
 
-# Функция для исправления ошибки в словаре
-def correct_word(old_word, new_word, new_translation, lang):
-    words = loe_failist(f"{lang}.txt")
-    with open(f"{lang}.txt", 'w', encoding="utf-8") as f:
-        for word in words:
-            if word.split(':')[0] == old_word:
-                f.write(f"{new_word}:{new_translation}\n")
-            else:
-                f.write(f"{word}\n")
+#перевод на русский
+def rustrans(word, estd, rusd):
+    if word in estd:
+        index = estd.index(word) #получение индекса эстонского слова
+        trans = rusd[index] #индекс эст для русского слова
+        print(f"The translation of '{word}' is '{trans}'.")
+    else:
+        print(f"The word '{word}' was not found in the dictionary.")
 
-# Функция для проверки знания слов
-def check_knowledge(lang):
-    words = loe_failist(f"{lang}.txt")
-    random.shuffle(words)
-    correct = 0
-    for word in words:
-        print(f"Переведите слово: {word.split(':')[0]}")
-        answer = input()
-        if answer == word.split(':')[1]:
-            print("Верно!")
-            correct += 1
+#перевод на эстонский
+def esttrans(word, estd, rusd):
+    if word in rusd:
+        index = rusd.index(word)
+        trans = estd[index]
+        print(f"The translation of '{word}' is '{trans}'.")
+    else:
+        print(f"The word '{word}' was not found in the dictionary.")
+
+#добавление слова в словарь
+def add(word, array, f):
+    if word not in array:
+        print(f"The word '{word}' is not in the dictionary. Do you want to add it?")
+        answer = input("Yes (y) / No (n): ").lower()
+        if answer == 'y':
+            array.append(word)
+            save_to_file(f, array)  # Сохраняем изменения в файле
+            print(f"The word '{word}' has been added to the dictionary.")
         else:
-            print("Неверно!")
-    print(f"Ваш результат: {correct / len(words) * 100}%")
+            print("The word was not added.")
+    else:
+        print(f"The word '{word}' is already in the dictionary.")
+        
+#изменение слова в словаре
+def edit(old_word, new_word, array, f):
+    if old_word in array:
+        index = array.index(old_word)
+        array[index] = new_word
+        save_to_file(f, array)  # Сохраняем изменения в файле
+        print(f"The word '{old_word}' has been successfully replaced with '{new_word}'.")
+    else:
+        print(f"The word '{old_word}' was not found in the dictionary.")
 
+#подсчет количества правильных ответов
+def check(input_array, check_array):
+    correct = 0
+    for i in input_array:
+        if i in check_array:
+            correct += 1
+    return correct
 
-def main():
-    rus = loe_failist("RUS.txt")
-    eng = loe_failist("ENG.TXT")
+while True:
+    print("\nChoose an action:")
+    print("1. Translate from Estonian to Russian")
+    print("2. Translate from Russian to Estonian")
+    print("3. Test your knowledge")
+    print("4. Add a word in the dictionary")
+    print("5. Edit a word to the dictionary")
+    print("6. Exit the program")
 
-    while True:
-        print("1. Добавить слово")
-        print("2. Исправить слово")
-        print("3. Проверить знания")
-        print("4. Проговорить слово")
-        print("5. Выход")
-        choice = input("Выберите действие: ")
-        if choice == "1":
-            word = input("Введите слово: ")
-            translation = input("Введите перевод: ")
-            lang = input("Введите язык (rus или eng): ")
-            add_word(word, translation, lang)
-        elif choice == "2":
-            old_word = input("Введите старое слово: ")
-            new_word = input("Введите новое слово: ")
-            new_translation = input("Введите новый перевод: ")
-            lang = input("Введите язык (rus или eng): ")
-            correct_word(old_word, new_word, new_translation, lang)
-        elif choice == "3":
-            lang = input("Введите язык (rus или eng): ")
-            check_knowledge(lang)
-        elif choice == "4":
-            word = input("Введите слово: ")
-            speak_word(word)
-        elif choice == "5":
-            break
+    choice = input("Enter choice (1-6): ")
 
-if __name__ == "__main__":
-    main()
+    if choice == '1':
+        word = input("Enter a word in Estonian: ")
+        rustrans(word, estd, rusd)
+    elif choice == '2':
+        word = input("Enter a word in Russian: ")
+        esttrans(word, estd, rusd)
+    elif choice == '3':
+        print("\nTest your knowledge:")
+        check_array = random.sample(estd, 5)  # выбор 5 случайных слов из эст словаря
+        print("Random 5 words in Estonian:")
+        for i in range(len(check_array)): #перечисление слов из списка по номерам
+            estword = check_array[i]
+            print(f"{i+1}. {estword}")
 
-
+        estrusdict = dict(zip(estd, rusd)) # создание словаря с парами "эстонское слово: русский перевод"
+        correct = [estrusdict[estword] for estword in check_array] # создание списка правильных слов для проверки
+        user_array = []
+        for estword in check_array:
+            user_word = input(f"Enter the translation of the word '{estword}': ")
+            user_array.append(user_word)
+        correctnum = check(user_array, correct)  # правильные ответы
+        percentage = (correctnum / 5) * 100
+        print(f"Your result: {percentage}% or {correctnum} out of 5")
+    elif choice == '4':
+        word = input("Enter a word you want to add to the dictionary: ")
+        add(word, estd, "EST.txt") #добавление нового слова в словарь
+    elif choice == '5':
+        old_word = input("Enter the word you want to edit: ")
+        new_word = input("Enter the new word: ")
+        edit(old_word, new_word, estd, "EST.txt") #сохранение нового слова в словарь
+    elif choice == '6':
+        print("Exiting the program.")
+        break
+    else:
+        print("Invalid choice. Please enter a number between 1 and 6.")
