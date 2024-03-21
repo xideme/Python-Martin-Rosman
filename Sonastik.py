@@ -15,6 +15,7 @@ def save_to_file(f, array):
     for element in array:
         file.write(element + '\n')
     file.close()
+
     
 #указание файла словаря
 rusd:list = read_from_file("RUS.txt")
@@ -114,24 +115,51 @@ while True:
         percentage = (correctnum / 5) * 100
         print(f"Your result: {percentage}% or {correctnum} out of 5")
     elif choice == '4':
-         word = input("Enter a word you want to add to the dictionary: ")
-         dictionary_choice = input("Choose the dictionary to add the word (RUS or EST): ").upper()
-         if dictionary_choice == 'RUS':
+         dictionary = input("Choose the dictionary to add the word (RUS or EST): ").upper()
+         if dictionary == 'RUS':
+            word = input("Enter a word you want to add to the dictionary: ")
             add(word, rusd, "RUS.txt")  #сохранение нового слова в русский словарь
-         elif dictionary_choice == 'EST':
-            add(word, estd, "EST.txt")  #сохранение нового слова в эстонский словарь
+            word = input(f"Enter an estonian translation for {word}: ")
+            add(word, estd, "EST.txt")
+         elif dictionary == 'EST':
+            word = input("Enter a word you want to add to the dictionary: ")
+            add(word, estd, "EST.txt")
+            word = input(f"Enter a russian translation for {word}: ")
+            add(word, rusd, "RUS.txt")
          else:
             print("Invalid dictionary choice.")
     elif choice == '5':
-        old_word = input("Enter the word you want to edit: ")
-        new_word = input("Enter the new word: ")
-        dictionary_choice = input("Choose the dictionary to edit the word (RUS or EST): ").upper()
-        if dictionary_choice == 'RUS':
-            edit(old_word, new_word, rusd, "RUS.txt")  #сохранение нового слова в русский словарь
-        elif dictionary_choice == 'EST':
-            edit(old_word, new_word, estd, "EST.txt")  #сохранение нового слова в эстонский словарь
+        dictionary = input("Choose the dictionary to edit the word (RUS or EST): ").upper()
+        if dictionary == 'RUS':
+            old_word = input("Enter the word you want to edit: ")
+            if old_word in rusd:
+                new_word = input("Enter the new word: ")
+                old_translation = estd[rusd.index(old_word)]
+                new_translation = estd[rusd.index(new_word)] if new_word in rusd else None
+                if new_translation:
+                    edit(old_word, new_word, rusd, "RUS.txt")  # Update the Russian dictionary
+                    edit(old_translation, new_translation, estd, "EST.txt")  # Update the Estonian dictionary
+                else:
+                    print(f"The translation for the new word '{new_word}' was not found in the dictionary.")
+            else:
+                print(f"The word '{old_word}' was not found in the dictionary.")
+        elif dictionary == 'EST':
+            old_word = input("Enter the word you want to edit: ")
+            if old_word in estd:
+                new_word = input("Enter the new word: ")
+                old_translation = rusd[estd.index(old_word)]
+                new_translation = rusd[estd.index(new_word)] if new_word in estd else None
+                if new_translation:
+                    edit(old_word, new_word, estd, "EST.txt")  # Update the Estonian dictionary
+                    edit(old_translation, new_translation, rusd, "RUS.txt")  # Update the Russian dictionary
+                else:
+                    print(f"The translation for the new word '{new_word}' was not found in the dictionary.")
+            else:
+                print(f"The word '{old_word}' was not found in the dictionary.")
         else:
             print("Invalid dictionary choice.")
+
+
     elif choice == '6':
         print("Exiting the program.")
         break

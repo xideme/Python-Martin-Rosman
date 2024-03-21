@@ -3,6 +3,5 @@ pirn
 kirs
 apelsin
 banaan
-kass
+tool
 koer
-kass
