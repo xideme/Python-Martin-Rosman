@@ -38,6 +38,9 @@ def esttrans(word, estd, rusd):
     else:
         print(f"The word '{word}' was not found in the dictionary.")
 
+
+
+
 #добавление слова в словарь
 def add(word, array, f):
     if word not in array:
@@ -51,6 +54,12 @@ def add(word, array, f):
             print("The word was not added.")
     else:
         print(f"The word '{word}' is already in the dictionary.")
+
+
+
+
+
+
         
 #изменение слова в словаре
 def edit(old_word, new_word, array, f):
@@ -105,12 +114,24 @@ while True:
         percentage = (correctnum / 5) * 100
         print(f"Your result: {percentage}% or {correctnum} out of 5")
     elif choice == '4':
-        word = input("Enter a word you want to add to the dictionary: ")
-        add(word, estd, "EST.txt") #добавление нового слова в словарь
+         word = input("Enter a word you want to add to the dictionary: ")
+         dictionary_choice = input("Choose the dictionary to add the word (RUS or EST): ").upper()
+         if dictionary_choice == 'RUS':
+            add(word, rusd, "RUS.txt")  #сохранение нового слова в русский словарь
+         elif dictionary_choice == 'EST':
+            add(word, estd, "EST.txt")  #сохранение нового слова в эстонский словарь
+         else:
+            print("Invalid dictionary choice.")
     elif choice == '5':
         old_word = input("Enter the word you want to edit: ")
         new_word = input("Enter the new word: ")
-        edit(old_word, new_word, estd, "EST.txt") #сохранение нового слова в словарь
+        dictionary_choice = input("Choose the dictionary to edit the word (RUS or EST): ").upper()
+        if dictionary_choice == 'RUS':
+            edit(old_word, new_word, rusd, "RUS.txt")  #сохранение нового слова в русский словарь
+        elif dictionary_choice == 'EST':
+            edit(old_word, new_word, estd, "EST.txt")  #сохранение нового слова в эстонский словарь
+        else:
+            print("Invalid dictionary choice.")
     elif choice == '6':
         print("Exiting the program.")
         break
