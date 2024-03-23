@@ -119,10 +119,10 @@ def näita_Zanrid():
     text.delete("1.0", "end")
     c.execute("SELECT * FROM Zanrid")
     rows = c.fetchall()
-    text.insert(tk.END, 'ID\tZanri nimi\n')  # Add column labels
+    text.insert(tk.END, 'ID\tZanri nimi\n')  # add column labels
     for row in rows:
-        text.insert(tk.END, '{}\t{}\n'.format(row[0], row[1]))  # Format each row as a tab-separated string
-        text.insert(tk.END, '-'*30 + '\n')  # Add a separation line after each row
+        text.insert(tk.END, '{}\t{}\n'.format(row[0], row[1]))  # format each row as a tab-separated string
+        text.insert(tk.END, '-'*30 + '\n')  # add a separation line after each row
 
 
 def näita_raamatud():
@@ -134,19 +134,19 @@ def näita_raamatud():
     INNER JOIN Zanrid ON Raamatud.Zanr_id = Zanrid.Zanr_id
 ''')
     rows = c.fetchall()
-    text.insert(tk.END, 'ID|Pealkiri |\tKuupäev |\tAutor |\tZanr\n')  # Add column labels
+    text.insert(tk.END, 'ID|Pealkiri |\tKuupäev |\tAutor |\tZanr\n')  #add column labels
     for row in rows:
-        text.insert(tk.END, '{}|{}|\t{}|\t{}|\t{}\n'.format(row[0], row[1], row[2], row[3], row[4]))  # Format each row as a tab-separated string
-        text.insert(tk.END, '-'*30 + '\n')  # Add a separator line
+        text.insert(tk.END, '{}|{}|\t{}|\t{}|\t{}\n'.format(row[0], row[1], row[2], row[3], row[4]))  #format each row as a tab-separated string
+        text.insert(tk.END, '-'*30 + '\n')  #add a separator line
 
 def näita_autorid():
     text.delete("1.0", "end")
     c.execute("SELECT * FROM Autorid")
     rows = c.fetchall()
-    text.insert(tk.END, 'ID | Autori nimi | Sunnikuupaev\n')  # Add column labels
+    text.insert(tk.END, 'ID | Autori nimi | Sunnikuupaev\n')  #add column labels
     for row in rows:
-        text.insert(tk.END, '{} | {} | {}\n'.format(row[0], row[1], row[2]))  # Format each row as a tab-separated string
-        text.insert(tk.END, '-'*30 + '\n')  # Add a separator line
+        text.insert(tk.END, '{} | {} | {}\n'.format(row[0], row[1], row[2]))  #format each row as a tab-separated string
+        text.insert(tk.END, '-'*30 + '\n')  #add a separator line
 
 
 
