@@ -22,41 +22,27 @@ def Dict_to_files(fail: str, jarjend: list):
 def RiikPealinn(riik_pealinn: dict, pealinn_riik: dict):
     print("\nSearch for capital 1 or country 2\n")
     Choice1 = input("Enter your choice: ")
-    if Choice1 in ['1', '2']:
+    if Choice1 == '1' or Choice1 == '2':
         Choice1 = int(Choice1)
         if Choice1 == 1:
-            pealinn = input("Enter the capital: ")
-            if pealinn in pealinn_riik:
-                print("Country:", pealinn_riik[pealinn])
+            NewPealinn = input("Enter the capital: ")
+            if NewPealinn in pealinn_riik:
+                print("Country:", pealinn_riik[NewPealinn])
             else:
                 print("Capital not found in the list!")
-                add = input("Do you want to add it to the dictionary? (yes/no): ").lower()
-                if add == 'yes':
-                    new_country = input("Enter the country for the capital: ")
-                    riik_pealinn[new_country] = pealinn
-                    pealinn_riik[pealinn] = new_country
-                    print("Capital and country added to the dictionary.")
-                    Dict_to_files("RiigidPealinnad.txt", sorted(riik_pealinn.keys()))  # Save to file
         elif Choice1 == 2:
-            riik = input("Enter the country: ")
-            if riik in riik_pealinn:
-                print("Capital:", riik_pealinn[riik])
+            NewRiik = input("Enter country: ")
+            if NewRiik in riik_pealinn:
+                print("Capital:", riik_pealinn[NewRiik])
             else:
                 print("Country not found in the list!")
-                add = input("Do you want to add it to the dictionary? (yes/no): ").lower()
-                if add == 'yes':
-                    new_capital = input("Enter the capital for the country: ")
-                    riik_pealinn[riik] = new_capital
-                    pealinn_riik[new_capital] = riik
-                    print("Country and capital added to the dictionary.")
-                    Dict_to_files("RiigidPealinnad.txt", sorted(riik_pealinn.keys()))  # Save to file
     else:
-        print("Invalid choice.")
+            print("Invalid choice.")
 
 def AddDelete(riik_pealinn: dict, pealinn_riik: dict, riigid: list):
     print("\nAdd 1 or Delete 2\n")
     Choice2 = input("Your choice: ")
-    if Choice2 in ['1', '2']:
+    if Choice2 == '1' or Choice2 == '2':
         Choice2 = int(Choice2)
         if Choice2 == 1:
             NewRiik = input("Enter new country: ")
@@ -66,23 +52,24 @@ def AddDelete(riik_pealinn: dict, pealinn_riik: dict, riigid: list):
             else:
                 riik_pealinn[NewRiik] = NewPealinn
                 pealinn_riik[NewPealinn] = NewRiik
-                Dict_to_files("RiigidPealinnad.txt", [f"{NewRiik}-{NewPealinn}" for NewRiik, NewPealinn in riik_pealinn.items()])
+                riigid.append(NewRiik)
+                Dict_to_files("RiigidPealinnad.txt", [f"{riik}-{pealinn}" for riik, pealinn in riik_pealinn.items()])
         elif Choice2 == 2:
             DelRiik = input("Do you want to delete by country 1 or by capital 2\n")
-            DelRiik = int(DelRiik)
-            if DelRiik in [1, 2]:
+            if DelRiik == '1' or DelRiik == '2':
+                DelRiik = int(DelRiik)
                 if DelRiik == 1:
-                    DeleteRiik = input("Enter the capital of the country: ")
+                    DeleteRiik = input("Enter the country: ")
                     if DeleteRiik in riik_pealinn:
                         V = riik_pealinn.get(DeleteRiik)
                         riik_pealinn.pop(DeleteRiik)
                         pealinn_riik.pop(V)
-                        riigid.remove(V)
+                        riigid.remove(DeleteRiik)
                         Dict_to_files("RiigidPealinnad.txt", [f"{riik}-{pealinn}" for riik, pealinn in riik_pealinn.items()])
                     else:
                         print("This country is not in the list!")
                 elif DelRiik == 2:
-                    DeletePealinn = input("Enter the country: ")
+                    DeletePealinn = input("Enter the capital: ")
                     if DeletePealinn in pealinn_riik:
                         K = pealinn_riik[DeletePealinn]
                         pealinn_riik.pop(DeletePealinn)
@@ -105,13 +92,13 @@ def Game(riik_pealinn: dict, pealinn_riik: dict, riigid: list):
         Choice3 = int(Choice3)
         if Choice3 == 1:
             for i in range(5):
-                j = randint(0, len(riigid) - 1)
-                while j in Gameanswer:  # проверяем что бы дубликатов не было
-                    j = randint(0, len(riigid) - 1)
-                Gameanswer.append(j)  
-                print("Lets ", i + 1, ": Guess the capital of " + riigid[j] + "?")
+                G = randint(0, len(riigid) - 1)
+                while G in Gameanswer:  # проверяем что бы дубликатов не было
+                    G = randint(0, len(riigid) - 1)
+                Gameanswer.append(G)  
+                print("Try ", i + 1, ": Guess the capital of " + riigid[G] + "?")
                 Gameinput1 = input("Your answer: ")
-                if Gameinput1.lower() == riik_pealinn[riigid[j]].lower():
+                if Gameinput1.lower() == riik_pealinn[riigid[G]].lower():
                     Score += 1
                     print("Correct answer!")
                 else:
@@ -120,13 +107,13 @@ def Game(riik_pealinn: dict, pealinn_riik: dict, riigid: list):
             print("Game over! Your score:", Score, "out of 5 turns (", percent, "%)...")
         elif Choice3 == 2:
             for i in range(5):
-                j = randint(0, len(pealinn_riik) - 1)
-                while j in Gameanswer:
-                    j = randint(0, len(pealinn_riik) - 1)
-                Gameanswer.append(j)
-                print("Turn ", i + 1, ": Guess the country of capital " + pealinnad[j] + "?")
+                G = randint(0, len(pealinn_riik) - 1)
+                while G in Gameanswer:
+                    G = randint(0, len(pealinn_riik) - 1)
+                Gameanswer.append(G)
+                print("Turn ", i + 1, ": Guess the country of capital " + pealinnad[G] + "?")
                 Gameinput2 = input("Your answer: ")
-                if Gameinput2.lower() == pealinn_riik[pealinnad[j]].lower():
+                if Gameinput2.lower() == pealinn_riik[pealinnad[G]].lower():
                     Score += 1
                     print("Correct answer!")
                 else:
@@ -139,12 +126,12 @@ def Game(riik_pealinn: dict, pealinn_riik: dict, riigid: list):
         
 
 riik_pealinn, pealinn_riik, riigid = failist_to_dict("RiigidPealinnad.txt")
-riigid = list(dict.fromkeys(riigid))  
-pealinnad = list(pealinn_riik.keys())  
+riigid = list(dict.fromkeys(riigid))  #удаляет повторяющиеся элементы из списка riigid
+pealinnad = list(pealinn_riik.keys())  # создает список содержащий все ключи (то есть столицы) из словаря pealinn_riik
 
 while True:
     print("\n")
-    print("View Country or Capital - 1\nAdd/Delete Country or Capital - 2\nGame - 3\nEXIT - 4\n")
+    print("View Country or Capital - 1\nAdd/Delete Country or Capital - 2\nGame - 3\nExit - 4\n")
     choice = input("What option do you choose? ")
     if choice == '1' or choice == '2' or choice == '3' or choice == '4':
         choice = int(choice)

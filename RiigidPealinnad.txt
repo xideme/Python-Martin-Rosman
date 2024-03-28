@@ -4,14 +4,14 @@ Armeenia-Jerevan
 Aserbaidžaan-Bakuu
 Austria-Viin
 Belgia-Brüssel
-Bosnia_ja_Hertsegoviina-Sarajevo
+Bosnia-ja_Hertsegoviina_Sarajevo
 Bulgaaria-Sofia
 Eesti-Tallinn
 Gruusia-Thbilisi
 Hispaania-Madrid
 Horvaatia-Zagreb
 Iirimaa-Dublin
-Island-Reykjav?k
+Island-Reykjavik
 Itaalia-Rooma
 Kasahstan-Astana
 Kreeka-Ateena
@@ -33,7 +33,7 @@ Prantsusmaa-Pariis
 Rootsi-Stockholm
 Rumeenia-Bukarest
 Saksamaa-Berliin
-San_Marino-San_Marino
+San-Marino_San_Marino
 Serbia-Belgrad
 Slovakkia-Bratislava
 Sloveenia-Ljubljana

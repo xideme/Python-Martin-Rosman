@@ -1,23 +1,24 @@
 ﻿import random
+import imghdr
 import tkinter as tk
 
 with open('Wordlelist.txt', encoding="utf-8-sig") as file:
     word_list = file.read().lower().splitlines()
 
-# Выбираем случайное слово
+#выбираем случайное слово
 word = random.choice(word_list)
 
-# Максимальное количество попыток
+#количество попыток
 max_attempts = 6
 
-# Счетчик попыток
+#счетчик попыток
 attempts = 0
 
-# Словарь для хранения состояния угаданных букв
+#словарь для хранения угаданных букв
 correct = {letter: False for letter in word}
 
 def display_word():
-    """Отображает текущее состояние угаданного слова."""
+    #текущее состояние угаданного слова
     display = ""
     for letter in word:
         if correct[letter]:
@@ -27,34 +28,31 @@ def display_word():
     return display
 
 def add_letter(letter):
-    """Добавляет угаданную букву в поле ввода."""
+    # букву в поле ввода
     textbox.insert(tk.END, letter)
 
 def check():
-    """Проверяет угаданную букву и отображает отчет."""
-    global attempts
+    #проверяет угаданную букву и отображает сообщение
+    global attempts #сохранять состояние количества попыток между вызовами функции
     guess = textbox.get().lower()
 
     if guess in word:
-        for i, letter in enumerate(word):
+        for i, letter in enumerate(word): # проверить каждую букву и узнать ее позицию в слове
             if letter == guess:
                 correct[guess] = True
                 label_word.config(text=display_word())
                 if display_word() == word:
                     label_msg.config(text="Вы угадали слово!")
-                    textbox.config(state='disabled')
-                    return  # Используем return, чтобы завершить функцию после угадывания всего слова
                 else:
-                    label_msg.config(text=f"Буква '{guess}' угадана, но стоит не на своем месте.", fg="yellow")
+                    label_msg.config(text=f"Буква '{guess}' угадана", fg="green")
     else:
         attempts += 1
         if attempts >= max_attempts:
             label_msg.config(text=f"Проигрыш. Загаданное слово было: {word}", fg="red")
-            textbox.config(state='disabled')
         else:
             label_msg.config(text=f"Буквы '{guess}' нет в слове.", fg="white")
 
-    textbox.delete(0, tk.END)  # Очищаем текстовое поле
+    textbox.delete(0, tk.END)  #очищаем текстовое поле
 
    
 
@@ -64,51 +62,57 @@ root.title("Wordle Game")
 
 root.geometry("850x480")
 
-# Загружаем изображение
+# фон изображение
 background_image = tk.PhotoImage(file="wordle_back.gif")
 
-# Создаем метку для отображения фонового изображения и устанавливаем его
+# отображение фонового изображения
 background_label = tk.Label(root, image=background_image)
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-# Задаем цвет текста для окна
+# задаем цвет текста
 root.option_add('*foreground', 'white')
 
-label_word = tk.Label(root, text=display_word(), font=("Arial", 24), fg="white", bg="black")
+#вывод слова
+label_word = tk.Label(root, text=display_word(), font=("Segoe UI", 24), fg="white", bg="black")
 label_word.pack(pady=20)
 
-label_msg = tk.Label(root, text="Please enter a symbol to guess a word", font=("Segoe UI", 14), fg="white", bg="black")
+#сообщения
+label_msg = tk.Label(root, text="Введи букву что бы попробовать угадать слово", font=("Segoe UI", 14), fg="white", bg="black")
 label_msg.pack()
 
+#ввод
 textbox = tk.Entry(root, font=("Segoe UI Bold", 18), bg="black", fg="white")
-textbox.pack(pady=10)
+textbox.pack(pady=15)
 
+#кнопка
 button_check = tk.Button(root, text="Проверить", bg="black", fg="white", font=("Segoe UI Bold", 18), command=check)
-button_check.pack()
+button_check.pack(padx=5, pady=5)
 
 
 
-# Создаем клавиатуру
+# создаем клавиатуру
 keyboard_frame = tk.Frame(root, bg="purple4")
 keyboard_frame.pack()
 
-# Буквы алфавита
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 row1 = alphabet[0:10]
 row2 = alphabet[10:19]
 row3 = alphabet[19:26]
 
-def create_buttons(row, frame):
-    for letter in row:
+def key_buttons(row, frame):
+    for i in range(len(row)):
+        letter = row[i]
         tk.Button(frame, text=letter, font=("Segoe UI", 15), bg="black", fg="white",
-                  width=6, height=2,
-                  command=lambda l=letter: add_letter(l)).pack(side="left", padx=1, pady=1)
+                  width=6, height=1,
+                  command=lambda l=letter: add_letter(l)).pack(side="left", padx=2, pady=2)
 
-for row_index, row in enumerate([row1, row2, row3]):
+row_list = [row1, row2, row3]
+for row_index in range(len(row_list)):
+    row = row_list[row_index]
     frame = tk.Frame(keyboard_frame, bg="black")
     frame.grid(row=row_index, column=0, pady=5)
-    create_buttons(row, frame)
+    key_buttons(row, frame)
    
 
 
