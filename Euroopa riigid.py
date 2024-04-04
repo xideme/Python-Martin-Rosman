@@ -1,14 +1,14 @@
 ﻿from random import *
 
 def failist_to_dict(f: str):  
-    riik_pealinn = {}  
+    riik_pealinn = {}  #словарь
     pealinn_riik = {}  
-    riigid = []  
+    riigid = [] 
     with open(f, 'r', encoding="utf-8-sig") as file:
         for line in file:
             k, v = line.strip().split('-')  
-            riik_pealinn[k] = v
-            pealinn_riik[v] = k
+            riik_pealinn[k] = v #ключи названия стран, значения столицы
+            pealinn_riik[v] = k #ключи названия столиц, значения - страны
             riigid.append(k)
     
     return riik_pealinn, pealinn_riik, riigid
